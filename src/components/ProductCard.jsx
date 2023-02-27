@@ -1,8 +1,49 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { AiFillDelete, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
-const ProductCard = ({ id, name, image, price, dampingRate, amount }) => {
+const ProductCard = ({
+  id,
+  name,
+  image,
+  price,
+  dampingRate,
+  amount,
+  getData,
+}) => {
   const [count, setCount] = useState(Number(`${amount}`));
+
+  const deleteData = async (id) => {
+    const BASE_URL = "https://63fa3d35897af748dccbb376.mockapi.io/example1";
+    try {
+      await axios.delete(`${BASE_URL}/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const putData = async () => {
+    const BASE_URL = "https://63fa3d35897af748dccbb376.mockapi.io/example1";
+    console.log(id, count);
+    try {
+      await axios.put(`${BASE_URL}/${id}`, {
+        amount: count,
+        name: name,
+        image: image,
+        price: price,
+        dampingRate: dampingRate,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  putData();
+  // console.log(id, count);
+
+  // getData()
+
+  // useEffect(() => {
+  //     getData()
+  //   }, [])
 
   return (
     <div className="d-flex w-100 border mt-3 shadow">
@@ -22,7 +63,6 @@ const ProductCard = ({ id, name, image, price, dampingRate, amount }) => {
             </span>
           </p>
         </div>
-
         <div className="button border p-2 d-flex justify-content-center w-100">
           <button
             className="m-2"
@@ -33,7 +73,9 @@ const ProductCard = ({ id, name, image, price, dampingRate, amount }) => {
             {""} <AiOutlinePlus />
             {""}
           </button>
-          <span className="m-2">{count}</span>
+          <span className="m-2" onChange={() => putData()}>
+            {count}
+          </span>
           <button
             className="m-2"
             onClick={() => setCount(count > 1 ? count - 1 : (count = 0))}
@@ -42,7 +84,12 @@ const ProductCard = ({ id, name, image, price, dampingRate, amount }) => {
           </button>
         </div>
         <div className="remove mt-4">
-          <button type="button" className="btn btn-danger w-100">
+          <button
+            id={id}
+            type="button"
+            className="btn btn-danger w-100"
+            onClick={() => deleteData(id)}
+          >
             <AiFillDelete />
             Remove
           </button>

@@ -27,7 +27,7 @@ const AddProduct = ({ data }) => {
     setProductQuantity("");
   };
 
-  const BASE_URL = "https://63fa3d35897af748dccbb376.mockapi.io/example1";
+  const BASE_URL = "https://63fa3d35897af748dccbb376.mockapi.io/shoping";
   const postData = async (newProduct) => {
     try {
       await axios.post(BASE_URL, newProduct);

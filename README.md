@@ -8,4 +8,4 @@
 
 - JS
 
-- REACTjs
+- REACT js
